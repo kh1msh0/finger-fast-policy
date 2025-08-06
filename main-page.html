@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finger Fast - The Ultimate Tap Speed Challenge</title>
+    <meta
+      name="description"
+      content="Think you're the fastest tapper? Prove it! Test your finger speed and compete with friends in the ultimate tap speed challenge game."
+    />
+    <meta
+      name="keywords"
+      content="tap speed test, finger speed game, reaction time, mobile game, tapping game, speed challenge"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        line-height: 1.6;
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="3" fill="url(%23a)"/><circle cx="600" cy="300" r="2" fill="url(%23a)"/><circle cx="800" cy="600" r="4" fill="url(%23a)"/><circle cx="300" cy="800" r="2" fill="url(%23a)"/></svg>');
+        animation: float 20s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      .hero-content {
+        max-width: 800px;
+        padding: 0 20px;
+        z-index: 1;
+        position: relative;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        animation: slideUp 1s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        margin-bottom: 30px;
+        opacity: 0.95;
+        animation: slideUp 1s ease-out 0.2s both;
+      }
+
+      .hero-description {
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        margin-bottom: 40px;
+        opacity: 0.9;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        animation: slideUp 1s ease-out 0.4s both;
+      }
+
+      .download-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        animation: slideUp 1s ease-out 0.6s both;
+      }
+
+      .download-btn {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .download-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .phone-mockup {
+        width: 250px;
+        height: 500px;
+        background: #000;
+        border-radius: 30px;
+        margin: 40px auto 0;
+        padding: 20px;
+        position: relative;
+        animation: phoneFloat 3s ease-in-out infinite;
+      }
+
+      @keyframes phoneFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .phone-screen {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tap-circle {
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin: 20px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+        50% {
+          transform: scale(1.05);
+          box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+      }
+
+      .tap-circle:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.1);
+      }
+
+      .features {
+        padding: 100px 20px;
+        background: #f8f9ff;
+        text-align: center;
+      }
+
+      .features h2 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin-bottom: 60px;
+        color: #333;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      .feature-card p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .stats {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 80px 20px;
+        color: white;
+        text-align: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .stat-item h3 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+      }
+
+      .stat-item p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+      }
+
+      .cta {
+        padding: 100px 20px;
+        background: white;
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .cta p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #666;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .cta-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 18px 35px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+
+      .footer {
+        background: #333;
+        color: white;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .footer p {
+        margin-bottom: 10px;
+      }
+
+      .footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .download-buttons,
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .phone-mockup {
+          width: 200px;
+          height: 400px;
+        }
+
+        .tap-circle {
+          width: 120px;
+          height: 120px;
+          font-size: 1rem;
+        }
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      .interactive-demo {
+        position: relative;
+      }
+
+      .tap-counter {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Finger Fast</h1>
+        <p class="hero-subtitle">The Ultimate Tap Speed Challenge</p>
+        <p class="hero-description">
+          Think you're the fastest tapper? Prove it! Test your finger speed and
+          compete with friends in the most addictive tapping game ever created.
+        </p>
+
+        <div class="download-buttons">
+          <a href="#" class="download-btn">
+            <span>🍎</span> Download on App Store
+          </a>
+          <a href="#" class="download-btn">
+            <span>🤖</span> Get it on Google Play
+          </a>
+        </div>
+
+        <div class="phone-mockup">
+          <div class="phone-screen interactive-demo">
+            <div class="tap-counter" id="tapCounter">Taps: 0</div>
+            <h3>Finger Fast</h3>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin: 10px 0">
+              Try it now!
+            </p>
+            <div class="tap-circle" id="tapButton" onclick="handleTap()">
+              TAP!
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.7">
+              Tap as fast as you can!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <div style="font-size: 1.5rem">↓</div>
+        <div style="font-size: 0.8rem">Scroll to explore</div>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Why Finger Fast?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>
+            Simple gameplay that anyone can pick up instantly. Just tap the
+            screen as fast as you can!
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Compete & Win</h3>
+          <p>
+            Challenge your friends and track personal bests. Who will be the
+            ultimate tapping champion?
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Perfect Training</h3>
+          <p>
+            Great for reaction time training, finger speed competitions, and
+            quick reflex tests.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>Super Lightweight</h3>
+          <p>
+            No login required. No complicated setup. Just download, tap, and
+            play instantly.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎮</div>
+          <h3>Addictive Fun</h3>
+          <p>
+            Perfect for short play sessions and passing time with friends. You
+            won't want to put it down!
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Beat Your Best</h3>
+          <p>
+            Track your personal records and see your improvement over time. Push
+            your limits!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <h2 style="margin-bottom: 50px; font-size: clamp(2rem, 5vw, 3rem)">
+        Join the Speed Revolution
+      </h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>10s</h3>
+          <p>Game Duration</p>
+        </div>
+        <div class="stat-item">
+          <h3>∞</h3>
+          <p>Replay Value</p>
+        </div>
+        <div class="stat-item">
+          <h3>1</h3>
+          <p>Simple Rule: Tap Fast!</p>
+        </div>
+        <div class="stat-item">
+          <h3>0</h3>
+          <p>Login Required</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Ready to Prove Your Speed?</h2>
+      <p>
+        Download Finger Fast now and find out if you have the fastest fingers in
+        town! Challenge your friends, beat your records, and become the ultimate
+        tapping champion.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="#" class="cta-btn"> <span>🍎</span> App Store </a>
+        <a href="#" class="cta-btn"> <span>🤖</span> Google Play </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2025 Finger Fast. All rights reserved.</p>
+      <p>
+        <a href="https://kh1msh0.github.io/finger-fast-policy/support"
+          >Contact Support</a
+        >
+        |
+        <a href="https://kh1msh0.github.io/finger-fast-policy/"
+          >Privacy Policy</a
+        >
+      </p>
+      <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7">
+        The fastest finger game that tests your speed, reflexes, and
+        determination.
+      </p>
+    </footer>
+
+    <script>
+      let tapCount = 0;
+      let lastTapTime = Date.now();
+
+      function handleTap() {
+        const now = Date.now();
+        const timeSinceLastTap = now - lastTapTime;
+
+        // Reset counter if more than 3 seconds since last tap
+        if (timeSinceLastTap > 3000) {
+          tapCount = 0;
+        }
+
+        tapCount++;
+        lastTapTime = now;
+
+        const tapButton = document.getElementById("tapButton");
+        const tapCounter = document.getElementById("tapCounter");
+
+        // Update counter
+        tapCounter.textContent = `Taps: ${tapCount}`;
+
+        // Add visual feedback
+        tapButton.style.transform = "scale(0.95)";
+        tapButton.style.background = "rgba(255, 255, 255, 0.4)";
+
+        setTimeout(() => {
+          tapButton.style.transform = "scale(1)";
+          tapButton.style.background = "rgba(255, 255, 255, 0.2)";
+        }, 100);
+
+        // Add ripple effect
+        createRipple(event || window.event, tapButton);
+      }
+
+      function createRipple(event, element) {
+        const ripple = document.createElement("div");
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+
+        ripple.style.width = ripple.style.height = size + "px";
+        ripple.style.left = event.clientX - rect.left - size / 2 + "px";
+        ripple.style.top = event.clientY - rect.top - size / 2 + "px";
+        ripple.style.position = "absolute";
+        ripple.style.borderRadius = "50%";
+        ripple.style.background = "rgba(255, 255, 255, 0.5)";
+        ripple.style.transform = "scale(0)";
+        ripple.style.animation = "rippleEffect 0.6s ease-out";
+        ripple.style.pointerEvents = "none";
+
+        element.appendChild(ripple);
+
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      }
+
+      // Add ripple animation to CSS
+      const style = document.createElement("style");
+      style.textContent = `
+            @keyframes rippleEffect {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(1); opacity: 0; }
+            }
+        `;
+      document.head.appendChild(style);
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      // Observe feature cards
+      document.querySelectorAll(".feature-card").forEach((card) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(30px)";
+        card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+        observer.observe(card);
+      });
+    </script>
+  </body>
+</html>
